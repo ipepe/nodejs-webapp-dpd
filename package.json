@@ -1,0 +1,23 @@
+{
+  "name": "nodejs-webapp-dpd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ipepe/nodejs-webapp-dpd.git"
+  },
+  "author": "Patryk Ptasiński",
+  "license": "I FORBID EVERYTHING",
+  "bugs": {
+    "url": "https://github.com/ipepe/nodejs-webapp-dpd/issues"
+  },
+  "homepage": "https://github.com/ipepe/nodejs-webapp-dpd",
+  "dependencies": {
+    "deployd": "^0.8.0"
+  }
+}
