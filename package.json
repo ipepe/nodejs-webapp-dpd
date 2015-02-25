@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/ipepe/nodejs-webapp-dpd",
   "dependencies": {
-    "deployd": "^0.8.0"
+    "deployd": "0.8.0",
+    "request": "2.53.0"
   }
 }
