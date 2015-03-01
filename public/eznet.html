@@ -179,7 +179,7 @@
 	function postsController($scope, $http) {
 		var p_after = getQueryVariable("after");
 		var p_before = getQueryVariable("before");
-		var subreddit = 'funny';
+		var subreddit = 'gifs';
 		var httpGetValue = 'http://www.reddit.com/r/' + subreddit + '/hot.json?count=25';
 		if(p_after){
 			httpGetValue += '&after=' + p_after;
