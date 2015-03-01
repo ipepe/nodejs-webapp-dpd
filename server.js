@@ -60,7 +60,8 @@ var options = {
 	// url: 'http://www.reddit.com/r/AdviceAnimals/search.json?restrict_sr=on&sort=top&t=day',
 	// url: 'http://www.reddit.com/r/funny/search.json?restrict_sr=on&sort=top&t=day',
 	// url: 'http://www.reddit.com/top/.json?sort=top&t=hour',
-	url: 'http://www.reddit.com/r/gif.json',
+	// url: 'http://www.reddit.com/r/gif.json',
+	url: 'http://www.reddit.com/r/EarthPorn/search.json?q=self%3Ano&sort=hot&restrict_sr=on&t=day',
 	headers: { 'User-Agent': 'Mozilla/5.0 (nodejs/request:2.53.0) If this bot is naughty, please contact me at requestbot@ipepe.pl' }
 };
 function getImgurAlbum(p_imgur_album_url){
@@ -96,6 +97,12 @@ function parseImgurl(p_url){
 		return false;
 		// http://gfycat.com/cajax/get/ScaryGrizzledComet
 		// {"gfyItem":{"gfyId":"scarygrizzledcomet","gfyName":"ScaryGrizzledComet","gfyNumber":"170977436","userName":"anonymous","width":374,"height":286,"frameRate":1,"numFrames":12,"mp4Url":"http:\/\/zippy.gfycat.com\/ScaryGrizzledComet.webm","webmUrl":"http:\/\/zippy.gfycat.com\/ScaryGrizzledComet.webm","gifUrl":"http:\/\/zippy.gfycat.com\/ScaryGrizzledComet.gif","gifSize":378641,"mp4Size":368876,"webmSize":327469,"createDate":"1384004433","views":"2","title":null,"md5":null,"tags":null,"nsfw":null,"sar":null,"url":null,"source":null,"dynamo":null,"uploadGifName":null}}
+	}else if(p_url.indexOf('gifyoutube.com/') > -1){
+		//this website doesnt event work
+		return false
+	}else if(p_url.indexOf('www.flickr.com/') > -1){
+		//not a chance, maybe api?
+		return false
 	}
 
 	return false;
