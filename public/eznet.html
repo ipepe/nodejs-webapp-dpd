@@ -135,13 +135,33 @@
 	<div class="footer">&copy; 2015 Patryk "iPePe" Ptasiński. All Rights Reserved.</div>
 
 	<script>
+	function urlGetJson(url, callback){
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				callback(JSON.parse(xmlhttp.responseText));
+			}
+		}
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send();
+	}
 	function parseImgUrl(url){
+		console.log(url);
 		if(url.match(/\.(jpeg|jpg|gif|png)$/) !== null){
 			return url;
 		}else if(url.match(/\.(webm|gifv)$/) !== null){
 			return url.substring( url.lastIndexOf(".")+1,0 ) + 'gif';
 		}else if(url.indexOf('imgur.com/') > -1){
-			return url+'.jpg';
+			if(url.indexOf('i.imgur.com') > -1){
+				return url;
+			}else if(url.indexOf('imgur.com/a/') > -1){
+				return url;
+				//jest albumem
+				//urlGetJson(https://api.imgur.com/3/album/hMBK4, callback)
+				//callback(x){ return x.data.cover }
+			}else{
+				return url.replace('imgur.com','i.imgur.com')+'.jpg';
+			}
 		}else if(url.indexOf('livememe.com/') > -1){
 			return 'http://i.lvme.me/' + url.substring(url.indexOf('livememe.com/')+13) + '.jpg';
 		}else if(url.indexOf('imgflip.com/') > -1){
@@ -154,48 +174,48 @@
 			return 'http://makeameme.org/media/created/' + url.substring(url.indexOf('makeameme.org/meme/')+19) + '.jpg';
 		}
 
-	return 'http://pagepeeker.com/thumbs.php?size=x&url=' + url;
-}
-function postsController($scope, $http) {
-	var p_after = getQueryVariable("after");
-	var p_before = getQueryVariable("before");
-	var subreddit = 'funny';
-	var httpGetValue = 'http://www.reddit.com/r/' + subreddit + '/hot.json?count=25';
-	if(p_after){
-		httpGetValue += '&after=' + p_after;
-	}else if(p_before){
-		httpGetValue += '&before=' + p_before;
+		return 'http://pagepeeker.com/thumbs.php?size=x&url=' + url;
 	}
-
-	document.getElementById('link2next').style.visibility = 'visible';
-	document.getElementById('link2next2').style.visibility = 'visible';
-	document.getElementById('ng-app').style.visibility = 'visible';
-	document.getElementById('link2prev').style.visibility = 'visible';
-	document.getElementById('link2prev2').style.visibility = 'visible';
-
-	$http.get(httpGetValue)
-	.success(function(response) {
-		if(response.data.after){
-			document.getElementById('link2next').style.visibility = 'visible';
-			document.getElementById('link2next2').style.visibility = 'visible';
-			document.getElementById('ng-app').style.visibility = 'visible';
-			document.getElementById('link2next').href = 'index.html?after=' + response.data.after;
-			document.getElementById('link2next2').href = 'index.html?after=' + response.data.after;
-			console.log(response.data.before);
-			console.log(response.data.after);
-			if(response.data.before !== null){
-				console.log(response.data.before)
-				document.getElementById('link2prev').style.visibility = 'visible';
-				document.getElementById('link2prev2').style.visibility = 'visible';
-				document.getElementById('link2prev').href = 'index.html?before=' + response.data.before;
-				document.getElementById('link2prev2').href = 'index.html?before=' + response.data.before;
-			}
+	function postsController($scope, $http) {
+		var p_after = getQueryVariable("after");
+		var p_before = getQueryVariable("before");
+		var subreddit = 'funny';
+		var httpGetValue = 'http://www.reddit.com/r/' + subreddit + '/hot.json?count=25';
+		if(p_after){
+			httpGetValue += '&after=' + p_after;
+		}else if(p_before){
+			httpGetValue += '&before=' + p_before;
 		}
 
-		document.getElementById('loadingDiv').style.display = "none";
-		$scope.posts = response.data.children;
-		$scope.posts.getImgUrl = parseImgUrl;
-	});
+		document.getElementById('link2next').style.visibility = 'visible';
+		document.getElementById('link2next2').style.visibility = 'visible';
+		document.getElementById('ng-app').style.visibility = 'visible';
+		document.getElementById('link2prev').style.visibility = 'visible';
+		document.getElementById('link2prev2').style.visibility = 'visible';
+
+		$http.get(httpGetValue)
+		.success(function(response) {
+			if(response.data.after){
+				document.getElementById('link2next').style.visibility = 'visible';
+				document.getElementById('link2next2').style.visibility = 'visible';
+				document.getElementById('ng-app').style.visibility = 'visible';
+				document.getElementById('link2next').href = 'index.html?after=' + response.data.after;
+				document.getElementById('link2next2').href = 'index.html?after=' + response.data.after;
+				console.log(response.data.before);
+				console.log(response.data.after);
+				if(response.data.before !== null){
+					console.log(response.data.before)
+					document.getElementById('link2prev').style.visibility = 'visible';
+					document.getElementById('link2prev2').style.visibility = 'visible';
+					document.getElementById('link2prev').href = 'index.html?before=' + response.data.before;
+					document.getElementById('link2prev2').href = 'index.html?before=' + response.data.before;
+				}
+			}
+
+			document.getElementById('loadingDiv').style.display = "none";
+			$scope.posts = response.data.children;
+			$scope.posts.getImgUrl = parseImgUrl;
+		});
 }
 </script>
 <script>
