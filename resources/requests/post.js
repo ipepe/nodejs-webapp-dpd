@@ -1,1 +1,0 @@
-this.timeCreated = Date.now();
