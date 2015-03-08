@@ -1,13 +1,13 @@
 // ==================== My scrape code
 console.log('Scraper.js imported');
 
-module.exports = function ( p_colors, p_webs_array ) {
+module.exports = function (p_dpd_ic, p_colors, p_webs_array ) {
 	console.log('Scraper instance created');
 
 	var scraperInstance = {};
 	
-	// scraperInstance.dpd_ic = p_dpd_ic;
-	scraperInstance.dpd_ic = require('deployd/lib/internal-client').build(process.server);
+	scraperInstance.dpd_ic = p_dpd_ic;
+	// scraperInstance.dpd_ic = require('deployd/lib/internal-client').build(process.server);
 	scraperInstance.webs_array = p_webs_array;
 	scraperInstance.webs_interation = 0;
 	scraperInstance.colors = p_colors;
@@ -24,31 +24,45 @@ module.exports = function ( p_colors, p_webs_array ) {
 	};
 	
 	scraperInstance.start = function(){
-		this.interval = setInterval(this.intervalFunction, this.timers.hour / this..webs_array.length );
-		return this.interval;
+		// this.interval = setInterval(this.intervalFunction.bind(this), this.timers.hour / this.webs_array.length );
+		this.intervalFunction();
+		// return this.interval;
 	}
 
 	scraperInstance.stop = function(){
 		clearInterval(this.interval);
 	}
 
-	scraperInstance.setWebsArray = function(p_webs_array){
-		this.webs_array = p_webs_array;
-	}
-
 	scraperInstance.intervalFunction = function(){
-		console.log( colors.cyan('intervalFunction running at: '+ new Date().toString() ) );
-		scraperInstance.request_options.url = sc
-		request(options, requestCallback);
+		console.log( this.colors.cyan('intervalFunction running at: ' + new Date().toString() ) );
+
+		this.webs_interation = (this.webs_interation+1) %this.webs_array.length;
+
+		console.log( this.colors.cyan('url: ' + this.webs_array[ this.webs_interation ] ) );
+
+		this.request_options.url = this.webs_array[ this.webs_interation ]
+		this.request( this.request_options, this.requestCallback.bind(this) );
+	}
+	scraperInstance.requestCallback = function(err, res, body) {
+		if(!err && res.statusCode == 200 && res.headers['content-type'].indexOf('json') > -1){
+			results = JSON.parse(body);
+			for(var i=0; i < results.data.children.length; i++){
+				this.loadDataIntoDpd(results.data.children[i].data)
+			}
+		}else{
+			console.error(err);
+			console.error(body);
+		}
 	}
 
-	scraperInstance.loadDataIntoDpd = function (p_data_url, p_data_title){
-		data_url = parseImgurl(p_data_url);
+	scraperInstance.loadDataIntoDpd = function (p_data){
+		data_url = this.parseImgUrl(p_data.url);
 		console.log('Parsed: ' + data_url)
 		if(data_url){
-			dpdic.adviceanimals.post( { imgurl : data_url, title: p_data_title } , resultErrorConsole);
+			console.log( this.colors.magenta('Adding object: ' + JSON.stringify(p_data) ) )
+			// dpdic.adviceanimals.post( { imgurl : data_url, title: p_data_title } , resultErrorConsole);
 		}else{
-			console.log( colors.magenta('Unknown url: ' + p_data_url) );
+			console.log( this.colors.red('Unknown url: ' + p_data.url) );
 			// dpdic.unknownurl.post( { url: p_data_url } , resultErrorConsole)
 		}
 	}
@@ -56,18 +70,6 @@ module.exports = function ( p_colors, p_webs_array ) {
 	scraperInstance.resultErrorConsole = function(result, error){
 		// if(result) console.log( colors.yellow('Added new: ' + result.imgurl.toString()) );
 		if(error) if(error.toString().indexOf("duplicate imgurl") < 0) console.error( colors.red( error.toString() ) );
-	}
-
-	scraperInstance.requestCallback = function(err, res, body) {
-		// console.log( colors.magenta('Request body:' + body) )
-		if(!err && res.statusCode == 200){
-			wyniki = JSON.parse(body);
-			wyniki.data.children.forEach(function(each){
-				loadDataIntoDpd(each.data.url, each.data.title);
-			});
-		}else{
-			console.error(err);
-		}
 	}
 
 	scraperInstance.parseImgUrl = function(p_url){
@@ -115,7 +117,7 @@ module.exports = function ( p_colors, p_webs_array ) {
 		// http://gfycat.com/cajax/get/ScaryGrizzledComet
 		// {"gfyItem":{"gfyId":"scarygrizzledcomet","gfyName":"ScaryGrizzledComet","gfyNumber":"170977436","userName":"anonymous","width":374,"height":286,"frameRate":1,"numFrames":12,"mp4Url":"http:\/\/zippy.gfycat.com\/ScaryGrizzledComet.webm","webmUrl":"http:\/\/zippy.gfycat.com\/ScaryGrizzledComet.webm","gifUrl":"http:\/\/zippy.gfycat.com\/ScaryGrizzledComet.gif","gifSize":378641,"mp4Size":368876,"webmSize":327469,"createDate":"1384004433","views":"2","title":null,"md5":null,"tags":null,"nsfw":null,"sar":null,"url":null,"source":null,"dynamo":null,"uploadGifName":null}}
 	}
-
+	console.log('Scraper instance returned');
 	return scraperInstance;
 }
 
