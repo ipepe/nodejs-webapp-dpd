@@ -25,18 +25,11 @@ module.exports = function (p_dpd_ic, p_colors, p_webs_array ) {
 		month: 	1000*60*60*24*30
 	};
 
-	scraperInstance.login = function(p_username, p_password){
-		// console.log(this);
-		this.dpd_ic.webs.get(console.log);
-		this.dpd_ic.appkeys.login( {username: p_username, password: p_password}, function(error,result){
-			console.log("error:" + error);
-			console.log("success:" + result);
-		});
-	};//.bind(scraperInstance)
-
 	scraperInstance.start = function(){
-		// this.interval = setInterval(this.intervalFunction.bind(this), this.timers.hour / this.webs_array.length );
+		this.interval = setInterval(this.intervalFunction.bind(this), this.timers.hour / this.webs_array.length );
 		this.intervalFunction();
+		// this.intervalFunction();
+		// this.intervalFunction();
 		return this.interval;
 	};
 
@@ -58,7 +51,9 @@ module.exports = function (p_dpd_ic, p_colors, p_webs_array ) {
 		if(!err && res.statusCode == 200 && res.headers['content-type'].indexOf('json') > -1){
 			results = JSON.parse(body);
 			for(var i=0; i < results.data.children.length; i++){
-				this.handleData(results.data.children[i].data);
+				if(!results.data.children[i].data.is_self){
+					this.handleData(results.data.children[i].data);
+				}
 			}
 		}else{
 			console.error(err);
@@ -72,10 +67,9 @@ module.exports = function (p_dpd_ic, p_colors, p_webs_array ) {
 
 			switch(data_url.switcher) {
 				case 0:
-					console.log( this.colors.magenta('Adding object: ' + JSON.stringify(p_data) ) );
-
+					// console.log( this.colors.magenta('Adding object: ' + JSON.stringify(p_data) ) );
 					//dodac zwykly direct obrazek
-					//this.dpd_ic.webs.post
+					this.postDataIntoDpd(p_data, data_url, false);
 					break;
 				//
 				case 1:
@@ -88,6 +82,7 @@ module.exports = function (p_dpd_ic, p_colors, p_webs_array ) {
 				//
 				case 3:
 					//unknown url, log to other urls
+					this.postDataIntoDpd(p_data, {url: 'unknown'}, true);
 					break;
 				//
 				case 4:
@@ -110,14 +105,17 @@ module.exports = function (p_dpd_ic, p_colors, p_webs_array ) {
 		}
 	};
 
-	scraperInstance.postDataIntoDpd = function(p_data){
-		post_obj = {};
-		this.dpd_ic.webs.post(post_obj, this.resultErrorConsole);
+	scraperInstance.postDataIntoDpd = function(p_data, data_url, unknown_flag){
+		// this.dpd_ic.webs.post(post_obj, this.resultErrorConsole);
+		this.dpd_ic.handler.post(
+				'vWRATWGHrqfLqUHybCW3ca6v',
+				{ unknown: unknown_flag, title: p_data.title,  url: data_url.url, origin: p_data.subreddit, sourceurl: 'reddit.com' + p_data.permalink },
+				this.resultErrorConsole );
 	};
 
 	scraperInstance.resultErrorConsole = function(result, error){
 		// if(result) console.log( colors.yellow('Added new: ' + result.imgurl.toString()) );
-		if(error) if( error.toString().indexOf("duplicate imgurl") < 0 ) console.error( colors.red( error.toString() ) );
+		if(error) if( error.toString().indexOf("duplicate url") < 0 ) console.error( colors.red( error.toString() ) );
 	};
 
 	scraperInstance.parseUrl = function(p_url){

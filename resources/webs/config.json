@@ -25,13 +25,21 @@
 			"id": "origin",
 			"order": 2
 		},
+		"sourceurl": {
+			"name": "sourceurl",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "sourceurl",
+			"order": 3
+		},
 		"timestamp": {
 			"name": "timestamp",
 			"type": "number",
 			"typeLabel": "number",
 			"required": false,
 			"id": "timestamp",
-			"order": 3
+			"order": 4
 		}
 	}
 }

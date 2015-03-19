@@ -1,3 +1,3 @@
-if(!me && internal){
+if(!internal){
     cancel();
 }
