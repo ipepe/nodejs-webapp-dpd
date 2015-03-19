@@ -1,0 +1,1 @@
+git remote add openshift ssh://550a37aa5973ca33be00005b@apps-ipepe.rhcloud.com/~/git/apps.git/
