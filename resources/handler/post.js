@@ -3,10 +3,10 @@ if(url !== '/vWRATWGHrqfLqUHybCW3ca6v'){
 }
 if(body.unkown){
     dpd.unknowns.post({ title: body.title,  url: body.url, origin: body.origin, sourceurl: body.sourceurl }, function(r,e){
-        if(e) console.log(e);
+        setResult({result: r, error: e})
     });
 }else{
     dpd.webs.post({ title: body.title,  url: body.url, origin: body.origin, sourceurl: body.sourceurl }, function(r,e){
-        if(e) console.log(e);
+        setResult({result: r, error: e})
     });
 }

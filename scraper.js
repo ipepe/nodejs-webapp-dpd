@@ -26,8 +26,8 @@ module.exports = function (p_dpd_ic, p_colors, p_webs_array ) {
 	};
 
 	scraperInstance.start = function(){
-		this.interval = setInterval(this.intervalFunction.bind(this), this.timers.hour / this.webs_array.length );
-		this.intervalFunction();
+		this.interval = setInterval(this.intervalFunction.bind(this), this.timers.minute / this.webs_array.length );
+		// this.intervalFunction();
 		// this.intervalFunction();
 		// this.intervalFunction();
 		return this.interval;
@@ -51,9 +51,7 @@ module.exports = function (p_dpd_ic, p_colors, p_webs_array ) {
 		if(!err && res.statusCode == 200 && res.headers['content-type'].indexOf('json') > -1){
 			results = JSON.parse(body);
 			for(var i=0; i < results.data.children.length; i++){
-				if(!results.data.children[i].data.is_self){
 					this.handleData(results.data.children[i].data);
-				}
 			}
 		}else{
 			console.error(err);
@@ -82,6 +80,7 @@ module.exports = function (p_dpd_ic, p_colors, p_webs_array ) {
 				//
 				case 3:
 					//unknown url, log to other urls
+					// console.log(p_data, {url: 'unknown'}, true);
 					this.postDataIntoDpd(p_data, {url: 'unknown'}, true);
 					break;
 				//
@@ -90,7 +89,8 @@ module.exports = function (p_dpd_ic, p_colors, p_webs_array ) {
 					break;
 				//unknown switch state
 				default:
-				console.log('Unknown switch');
+					// console.log(data_url);
+					console.log('Unknown switch');
 			}
 
 			// if( typeof data_url == "string" ){
@@ -110,12 +110,15 @@ module.exports = function (p_dpd_ic, p_colors, p_webs_array ) {
 		this.dpd_ic.handler.post(
 				'vWRATWGHrqfLqUHybCW3ca6v',
 				{ unknown: unknown_flag, title: p_data.title,  url: data_url.url, origin: p_data.subreddit, sourceurl: 'reddit.com' + p_data.permalink },
-				this.resultErrorConsole );
+				this.resultErrorConsole
+		);
 	};
 
 	scraperInstance.resultErrorConsole = function(result, error){
 		// if(result) console.log( colors.yellow('Added new: ' + result.imgurl.toString()) );
-		if(error) if( error.toString().indexOf("duplicate url") < 0 ) console.error( colors.red( error.toString() ) );
+		if(error)
+				if( error.message.toString().indexOf("duplicate url") < 0 )
+						console.error( colors.red( error.toString() ) );
 	};
 
 	scraperInstance.parseUrl = function(p_url){
@@ -160,7 +163,7 @@ module.exports = function (p_dpd_ic, p_colors, p_webs_array ) {
 			return { switcher: 4 };
 		}
 
-		return { switch: 3 };
+		return { switcher: 3 };
 	};
 	scraperInstance.getImgurAlbum = function (p_imgur_album_url){
 		// jest albumem
