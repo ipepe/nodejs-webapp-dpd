@@ -4,6 +4,7 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>ipepe - memes</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" type="text/css" href="font-awesome.min.css">
 	<script src="angular.min.js"></script>
 	<style type="text/css">
 	body, img, div, a {
@@ -29,25 +30,16 @@
 	.postImg{
 		height: 50%;
 	}
-	.selfText{
-		font-size: 1.5vw;
-	}
 	.footer{
 		background-color: #2A2A2A;
 		font-size: 1.0vw;
-		height: 5vw;
-		padding: 0.4vw, 0.2vw;
 	}
 	.postDiv{
 		padding: 10px 5px 5px 5px;
 		background-color: #2A2A2A;
 		max-width: 95%;
 	}
-	.titleDiv{
-		color: #747474;
-		max-width: 95%;
-	}
-	.loadingDiv{
+	.titleDiv, .fa-responsive-size, .loadingDiv{
 		color: #747474;
 		max-width: 95%;
 	}
@@ -78,7 +70,10 @@
 			max-width: 50%;
 			/*max-height: 80%*/
 		}
-		body, img, div, a {
+		.fa-responsive-size{
+			font-size: 2.0vw;
+		}
+		body, img, div, a, i{
 			font-size: 2.0vw;
 		}
 	}
@@ -87,36 +82,43 @@
 			max-width: 95%;
 			font-weight: bold;
 		}
-		body, img, div, a {
+		.fa-responsive-size{
+			font-size: 3.5vw;
+		}
+		body, img, div, a, i {
 			font-size: 3.5vw;
 		}
 	}
 	</style>
 </head>
 <body style="background-color: black;">
-	<br>
+
+	<div class="loadingDiv" id="loadingDiv">
+		<h1>Starting...</h1>
+	</div>
+
 	<div class="navigationDiv">
-		<a id="link2prev" href="index.html" style="visibility: hidden;">
+		<a id="top_link_prev" href="index.html" style="display: none;">
 			<img src="next.png" style="background-color: #2A2A2A;" class="prevImg" />
 		</a>
-		<a id="link2next" href="index.html" style="visibility: hidden;">
+		<a id="top_link_next" href="index.html" style="display: none;">
 			<img src="next.png" style="background-color: #2A2A2A;" class="nextImg" />
 		</a>
 	</div>
+
 	<br>
-	<div class="loadingDiv" id="loadingDiv"><h1>Loading...</h1></div>
-	<br>
-	<div ng-app="" ng-controller="postsController" class="mainContainer" id="ng-app" style="visibility: hidden;">
+
+	<div ng-app="" ng-controller="postsController" class="mainContainer" id="ng-app" style="display: none;">
 		<div class="postDiv" ng-repeat="post in posts" >
 			<div class="titleDiv" >
-				<a href="{{ post.sourceurl }}" target="_parent"><b>
+				<a href="{{ post.sourceurl }}">
 					{{ post.title }}
-				</b></a>
+				</a>
 			</div>
 			<div class="imageDiv" >
-				<a href="{{ post.sourceurl }}" target="_parent">
+				<a href="{{ post.sourceurl }}">
 					<img class="postImg" src="{{ post.url }}"/>
-					<!-- <div class="titleDiv">{{ posts.getImgUrl(post.data.url) }}</div> -->
+					<div class="titleDiv">{{ posts.sourceurl }}</div>
 				</a>
 			</div>
 			<div class="titleDiv selfText" ng-if="post.data.is_self == true">
@@ -124,16 +126,27 @@
 			</div>
 		</div>
 	</div>
+
 	<br>
+
 	<div class="navigationDiv">
-		<a id="link2prev2" href="index.html" style="visibility: hidden;">
+		<a id="bot_link_prev" href="index.html" style="display: none;">
 			<img src="next.png" style="background-color: #2A2A2A;" class="prevImg" />
 		</a>
-		<a id="link2next2" href="index.html" style="visibility: hidden;">
+		<a id="bot_link_next" href="index.html" style="display: none;">
 			<img src="next.png" style="background-color: #2A2A2A;" class="nextImg" />
 		</a>
 	</div>
-	<div class="footer"><a href="http://www.ipepe.pl/" style="margin: 1vw;">&copy; 2015 Patryk "iPePe" Ptasiński. All Rights Reserved.</a></div>
+
+	<div class="footer">
+		<a href="http://www.ipepe.pl/">
+			&copy; 2015 Patryk "iPePe" Ptasiński. All Rights Reserved.
+		</a>
+		<i class="fa fa-cog fa-spin fa-responsive-size"></i>
+		<a href="http://apps.ipepe.pl/">
+			More apps from iPePe!
+		</a>
+	</div>
 
 	<script type="text/javascript">
 	function getQueryVariable(variable)
@@ -146,37 +159,42 @@
 		}
 		return(false);
 	}
+	function goNextButtons(make_visible){
+		document.getElementById('top_link_next').style.display = make_visible? '' : 'none';
+		document.getElementById('bot_link_next').style.display = make_visible? '' : 'none';
+	}
+	function goPrevButtons(make_visible){
+		document.getElementById('top_link_prev').style.display = make_visible? '' : 'none';
+		document.getElementById('bot_link_prev').style.display = make_visible? '' : 'none';
+	}
+	function setNavButtons(p_page){
+		p_page = parseInt(p_page, 10);
+		document.getElementById('top_link_next').href = "/index2.html?page=" + (p_page+1)
+		document.getElementById('bot_link_next').href = "/index2.html?page=" + (p_page+1)
+		document.getElementById('top_link_prev').href = "/index2.html?page=" + (p_page-1)
+		document.getElementById('bot_link_prev').href = "/index2.html?page=" + (p_page-1)
+	}
 	function postsController($scope, $http) {
 		var p_page = getQueryVariable("page") || 0;
 		var httpGetValue = 'http://localhost:8080/handler/memes?page=' + p_page;
 
-		document.getElementById('link2next').style.visibility = 'visible';
-		document.getElementById('link2next2').style.visibility = 'visible';
-		document.getElementById('ng-app').style.visibility = 'visible';
-		document.getElementById('link2prev').style.visibility = 'visible';
-		document.getElementById('link2prev2').style.visibility = 'visible';
+		document.getElementById('loadingDiv').innerHTML = "<h1>Loading...</h1>"
 
 		$http.get(httpGetValue)
 		.success(function(response) {
-			if(p_page === 0){
-				document.getElementById('link2next').style.visibility = 'visible';
-				document.getElementById('link2next2').style.visibility = 'visible';
-				document.getElementById('ng-app').style.visibility = 'visible';
-				// document.getElementById('link2next').href = 'index2.html?after=' + response.data.after;
-				// document.getElementById('link2next2').href = 'index.html?after=' + response.data.after;
-				// console.log(response.data.before);
-				// console.log(response.data.after);
-				if(p_page === 2){
-					// console.log(response.data.before)
-					document.getElementById('link2prev').style.visibility = 'visible';
-					document.getElementById('link2prev2').style.visibility = 'visible';
-					// document.getElementById('link2prev').href = 'index2.html?before=' + response.data.before;
-					// document.getElementById('link2prev2').href = 'index2.html?before=' + response.data.before;
-				}
-			}
-
-			document.getElementById('loadingDiv').style.display = "none";
 			$scope.posts = response.result;
+
+			document.getElementById('ng-app').style.display = 'inherit';
+			document.getElementById('loadingDiv').innerHTML = "<h1>Loaded! Have fun!</h1>"
+			document.getElementById('loadingDiv').style.display = 'none';
+
+			if( response.result.length === 10 ) goNextButtons(true);
+			if( p_page > 0 ) goPrevButtons(true);
+
+			setNavButtons(p_page);
+
+		}).error(function(response) {
+			document.getElementById('loadingDiv').innerHTML = "<h1>ERRROR!</h1>"
 		});
 	}
 	</script>
