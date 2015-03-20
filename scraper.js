@@ -109,7 +109,7 @@ module.exports = function (p_dpd_ic, p_colors, p_webs_array ) {
 		// this.dpd_ic.webs.post(post_obj, this.resultErrorConsole);
 		this.dpd_ic.handler.post(
 				'vWRATWGHrqfLqUHybCW3ca6v',
-				{ unknown: unknown_flag, title: p_data.title,  url: data_url.url, origin: p_data.subreddit, sourceurl: 'reddit.com' + p_data.permalink },
+				{ unknown: unknown_flag, title: p_data.title,  url: data_url.url, origin: p_data.subreddit, sourceurl: 'http://reddit.com' + p_data.permalink },
 				this.resultErrorConsole
 		);
 	};
