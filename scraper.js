@@ -26,7 +26,7 @@ module.exports = function (p_dpd_ic, p_colors, p_webs_array ) {
 	};
 
 	scraperInstance.start = function(){
-		this.interval = setInterval(this.intervalFunction.bind(this), this.timers.minute / this.webs_array.length );
+		this.interval = setInterval(this.intervalFunction.bind(this), this.timers.hour / this.webs_array.length );
 		// this.intervalFunction();
 		// this.intervalFunction();
 		// this.intervalFunction();
@@ -60,7 +60,7 @@ module.exports = function (p_dpd_ic, p_colors, p_webs_array ) {
 	};
 
 	scraperInstance.handleData = function (p_data){
-		if(!p_data.is_self){
+		if( !p_data.is_self && !p_data.stickied ){
 			data_url = this.parseUrl(p_data.url);
 
 			switch(data_url.switcher) {

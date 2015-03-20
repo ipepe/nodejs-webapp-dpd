@@ -1,20 +1,14 @@
 switch (url){
     case '/memes':
-        console.log('/memes called');
-        query = {
-            category: { $in: ['AdviceAnimals'] },
+        sub_query = {
+            origin: { $in: ['AdviceAnimals'] },
             $sort: {timestamp: -1}
+        };
+        if(query.page > 0){
+            sub_query["$skip"] = query.page*10;
         }
-        if(query.page){
-            query["$skip"] = query.page*10;
-            query["$limit"] = 10;
-        }
-        dpd.webs.get({
-            category: { $in: ['AdviceAnimals'] },
-            $sort: {timestamp: -1},
-            $skip: ,
-            $limit: 10
-        }, function(result, error){
+        sub_query["$limit"] = 10;
+        dpd.webs.get(sub_query, function(result, error){
             setResult({error: error, result: result});
         });
         break;
