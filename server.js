@@ -9,13 +9,12 @@ var scraper_def = require('./scraper.js');
 
 function deploydStartedCallback(){
 	var pages_array = [
-		'http://reddit.com/.json',
-		'http://reddit.com/r/funny.json',
-		'http://reddit.com/r/AdviceAnimals.json'
+		'http://www.reddit.com/r/AdviceAnimals/top/.json?sort=top&t=all&limit=100',
+		'http://www.reddit.com/r/AdviceAnimals/top/.json?sort=top&t=week&limit=100',
+		'http://www.reddit.com/r/AdviceAnimals/top/.json?sort=top&t=day'
 	];
 
 	var scraper_instance = scraper_def(deployd_instance.dpd_ic, colors, pages_array );
-
-	// scraper_instance.login("scraper","scraper");
+	
 	scraper_instance.start();
 }

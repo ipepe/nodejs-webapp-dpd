@@ -66,7 +66,7 @@
 		text-decoration: none;
 	}
 	@media all and (min-width: 901px){
-		div.postDiv{
+		div.postDiv, .footer{
 			max-width: 50%;
 			/*max-height: 80%*/
 		}
@@ -78,7 +78,7 @@
 		}
 	}
 	@media all and (max-width: 900px){
-		.postDiv{
+		.postDiv, .footer{
 			max-width: 95%;
 			font-weight: bold;
 		}
@@ -89,9 +89,68 @@
 			font-size: 3.5vw;
 		}
 	}
+	.menuButton:hover,
+	.menuButton:focus {
+		background: #fff;
+	}
+	#menu {
+		margin-left: -150px; /* "#menu" width */
+		width: 150px;
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		z-index: 1000; /* so the menu or its navicon stays above all content */
+		background: #191818;
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+	.menuButton {
+		position: fixed;
+		display: block; /* show this only on small screens */
+		top: 0;
+		left: 0; /* "#menu width" */
+		background: #fff;
+		background: rgba(255,255,255,0.7);
+		z-index: 10;
+		/*width: auto;
+		height: auto;*/
+		padding: 1vw;
+		border-radius: 0px 0px 20px 0px;
+	}
+	.menuList {
+		margin-left: -20vw;
+		position: fixed;
+		display: block; /* show this only on small screens */
+		top: 0;
+		left: 0; /* "#menu width" */
+		background: #fff;
+		width: 20vw;
+		height: 100%;
+		/*z-index: 10;*/
+		/*width: auto;
+		height: auto;*/
+		/*padding: 1vw;*/
+		border-radius: 0px;
+	}
+	.active {
+		left: 20vw;
+		/*position: relative;*/
+	}
 	</style>
 </head>
-<body style="background-color: black;">
+<body>
+
+	<div id="menuButton" class="menuButton" onClick="clickMenu()">
+		<i class="fa fa-bars fa-3x"></i>
+	</div>
+
+	<div id="menuList" class="menuList">
+		<br>
+		<a href="http://apps.ipepe.pl/">
+			More apps!
+		</a>
+	</div>
 
 	<div class="loadingDiv" id="loadingDiv">
 		<h1>Starting...</h1>
@@ -140,15 +199,28 @@
 
 	<div class="footer">
 		<a href="http://www.ipepe.pl/">
-			&copy; 2015 Patryk "iPePe" Ptasiński. All Rights Reserved.
+			Made by Patryk "iPePe" Ptasiński.
 		</a>
-		<i class="fa fa-cog fa-spin fa-responsive-size"></i>
+		<br>
 		<a href="http://apps.ipepe.pl/">
+			<i class="fa fa-cog fa-spin fa-responsive-size"></i>
 			More apps from iPePe!
 		</a>
 	</div>
 
 	<script type="text/javascript">
+	function clickMenu(){
+		console.log("click menu works");
+		var btn = document.getElementById('menuButton');
+		var list = document.getElementById('menuList');
+		if( btn.classList.contains("active") && list.classList.contains("active") ){
+			btn.classList.remove("active");
+			list.classList.remove("active");
+		}else{
+			btn.classList.add("active");
+			list.classList.add("active");
+		}
+	}
 	function getQueryVariable(variable)
 	{
 		var query = window.location.search.substring(1);
@@ -169,10 +241,10 @@
 	}
 	function setNavButtons(p_page){
 		p_page = parseInt(p_page, 10);
-		document.getElementById('top_link_next').href = "/index2.html?page=" + (p_page+1)
-		document.getElementById('bot_link_next').href = "/index2.html?page=" + (p_page+1)
-		document.getElementById('top_link_prev').href = "/index2.html?page=" + (p_page-1)
-		document.getElementById('bot_link_prev').href = "/index2.html?page=" + (p_page-1)
+		document.getElementById('top_link_next').href = "index.html?page=" + (p_page+1)
+		document.getElementById('bot_link_next').href = "index.html?page=" + (p_page+1)
+		document.getElementById('top_link_prev').href = "index.html?page=" + (p_page-1)
+		document.getElementById('bot_link_prev').href = "index.html?page=" + (p_page-1)
 	}
 	function postsController($scope, $http) {
 		var p_page = getQueryVariable("page") || 0;

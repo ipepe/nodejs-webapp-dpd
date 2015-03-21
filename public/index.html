@@ -1,8 +1,149 @@
+<!DOCTYPE HTML>
 <html>
 <head>
-<script src="dpd.js"></script>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>ipepe - mobile apps</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" type="text/css" href="font-awesome.min.css">
+  <script src="angular.min.js"></script>
+  <style type="text/css">
+  body, img, div, a {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 3.5vw;
+    border-radius: 10px;
+    word-wrap: break-word;
+  }
+  body{
+    background-color: black;
+  }
+  img{
+    max-width: 90%;
+    max-height: 50%;
+    width: 90%;
+    background-color: white;
+  }
+  div{
+    padding: auto;
+    margin: auto auto 10px auto;
+  }
+  .postImg{
+    height: 50%;
+  }
+  .footer{
+    background-color: #2A2A2A;
+    font-size: 1.0vw;
+  }
+  .postDiv{
+    padding: 10px 5px 5px 5px;
+    background-color: #2A2A2A;
+    max-width: 95%;
+  }
+  .titleDiv, .fa-responsive-size, .loadingDiv{
+    color: #747474;
+    max-width: 95%;
+  }
+  .nextImg{
+    max-width: 200px;
+    max-height: 200px;
+  }
+  .prevImg{
+    max-width: 200px;
+    max-height: 200px;
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+  }
+  a:link,a:visited, a:active{
+    color: #747474;
+    text-decoration: none;
+  }
+  a:hover, th {
+    color: #ababab;
+    text-decoration: none;
+  }
+  @media all and (min-width: 901px){
+    div.postDiv, .footer{
+      max-width: 50%;
+      /*max-height: 80%*/
+    }
+    .fa-responsive-size{
+      font-size: 2.0vw;
+    }
+    body, img, div, a, i{
+      font-size: 2.0vw;
+    }
+  }
+  @media all and (max-width: 900px){
+    .postDiv, .footer{
+      max-width: 95%;
+      font-weight: bold;
+    }
+    .fa-responsive-size{
+      font-size: 3.5vw;
+    }
+    body, img, div, a, i {
+      font-size: 3.5vw;
+    }
+  }
+  </style>
 </head>
 <body>
-PLIK: Index.html
+
+  <div id="mainContainer">
+    <div class="postDiv">
+
+      <div class="titleDiv" >
+        Application Title Example
+      </div>
+
+      <div class="imageDiv" >
+        <table>
+          <tr>
+            <th width="50%">
+              <i class="fa fa-apple"></i>
+              iOS
+            </th>
+            <th width="50%">
+              <i class="fa fa-android"></i>
+              Android
+            </th>
+          </tr>
+          <tr>
+            <td>
+              <a href="//www.ipepe.pl/">
+                <img class="postImg" src="app1_logo_img.jpg"/>
+              </a>
+            </td>
+            <td>
+              <a href="//www.ipepe.pl/">
+                <img class="postImg" src="app1_logo_img.jpg"/>
+              </a>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="titleDiv selfText">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+        fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+        culpa qui officia deserunt mollit anim id est laborum.
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a href="http://www.ipepe.pl/">
+      Made by Patryk "iPePe" Ptasiński
+    </a>
+    <i class="fa fa-cog fa-spin fa-responsive-size"></i>
+  </div>
+
 </body>
 </html>
