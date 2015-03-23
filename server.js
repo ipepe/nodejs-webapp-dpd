@@ -9,6 +9,10 @@ var scraper_def = require('./scraper.js');
 
 function deploydStartedCallback(){
 	var pages_array = [
+		'http://www.reddit.com/r/HeresAFunFact/top/.json?sort=top&t=all&limit=100',
+		'http://www.reddit.com/r/HeresAFunFact/top/.json?sort=top&t=week',
+		'http://www.reddit.com/r/HeresAFunFact/top/.json?sort=top&t=day',
+
 		'http://www.reddit.com/r/AdviceAnimals/top/.json?sort=top&t=all&limit=100',
 		'http://www.reddit.com/r/AdviceAnimals/top/.json?sort=top&t=week',
 		'http://www.reddit.com/r/AdviceAnimals/top/.json?sort=top&t=day'

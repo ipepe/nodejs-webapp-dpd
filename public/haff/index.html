@@ -1,0 +1,285 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>ipepe - memes</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" type="text/css" href="font-awesome.min.css">
+	<script src="angular.min.js"></script>
+	<style type="text/css">
+	body, img, div, a {
+		text-align: center;
+		font-family: sans-serif;
+		font-size: 3.5vw;
+		border-radius: 10px;
+		word-wrap: break-word;
+	}
+	.postImg{
+		max-width: 90%;
+		max-height: 50%;
+		width: 90%;
+		background-color: white;
+	}
+	.postDiv{
+		padding: auto;
+		margin: auto auto 10px auto;
+	}
+	.postImg{
+		height: 50%;
+	}
+	.footer{
+		background-color: #2A2A2A;
+		font-size: 1.0vw;
+	}
+	.postDiv{
+		padding: 10px 5px 5px 5px;
+		background-color: #2A2A2A;
+		max-width: 95%;
+	}
+	.titleDiv, .fa-responsive-size, .loadingDiv{
+		color: #747474;
+		max-width: 95%;
+	}
+	.navImg{
+		/*display: none;*/
+		background-color: #2A2A2A
+	}
+	.prevImg{
+		-moz-transform: scaleX(-1);
+		-o-transform: scaleX(-1);
+		-webkit-transform: scaleX(-1);
+		transform: scaleX(-1);
+		filter: FlipH;
+		-ms-filter: "FlipH";
+	}
+	a:link,a:visited, a:active {
+		color: #747474;
+		text-decoration: none;
+	}
+	a:hover {
+		color: #ababab;
+		text-decoration: none;
+	}
+	@media all and (min-width: 901px){
+		div.postDiv, .footer{
+			max-width: 50%;
+			/*max-height: 80%*/
+		}
+		.fa-responsive-size{
+			font-size: 2.0vw;
+		}
+		body, img, div, a, i{
+			font-size: 2.0vw;
+		}
+		.navImg{
+			width: 12vw;
+			max-width: 15vw;
+			max-height: 15vw;
+		}
+	}
+	@media all and (max-width: 900px){
+		.postDiv, .footer{
+			max-width: 95%;
+			/*font-weight: bold;*/
+		}
+		.fa-responsive-size{
+			font-size: 3.5vw;
+		}
+		body, img, div, a, i {
+			font-size: 5vw;
+		}
+		.navImg{
+			width: 30%;
+			max-width: 30%;
+		}
+	}
+	.menuButton:hover,
+	.menuButton:focus {
+		background: #fff;
+	}
+	#menu {
+		margin-left: -150px; /* "#menu" width */
+		width: 150px;
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		z-index: 1000; /* so the menu or its navicon stays above all content */
+		background: #191818;
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+	.menuButton {
+		position: fixed;
+		display: block; /* show this only on small screens */
+		top: 0;
+		left: 0; /* "#menu width" */
+		background: #fff;
+		background: rgba(255,255,255,0.7);
+		z-index: 10;
+		/*width: auto;
+		height: auto;*/
+		padding: 1vw;
+		border-radius: 0px 0px 20px 0px;
+	}
+	.menuList {
+		margin-left: -30vw;
+		position: fixed;
+		display: block; /* show this only on small screens */
+		top: 0;
+		left: 0; /* "#menu width" */
+		background: #fff;
+		width: 30vw;
+		height: 100%;
+		/*z-index: 10;*/
+		/*width: auto;
+		height: auto;*/
+		/*padding: 1vw;*/
+		border-radius: 0px;
+	}
+	.active {
+		left: 30vw;
+		/*position: relative;*/
+	}
+	body{
+		text-align: center;
+		background-color: black;
+	}
+	</style>
+</head>
+<!-- <div id="menuButton" class="menuButton" onClick="clickMenu()">
+<i class="fa fa-bars fa-3x"></i>
+</div>
+
+<div id="menuList" class="menuList">
+<br>
+<a href="http://apps.ipepe.pl/">
+More apps!
+</a>
+</div> -->
+<body>
+	<center>
+
+		<div class="loadingDiv" id="loadingDiv">
+			<h1>Starting...</h1>
+			<h3>Make sure JavaScript is running..?</h3>
+		</div>
+
+		<div class="navigationDiv">
+			<a id="top_link_prev" href="index.html">
+				<img src="next.png" class="prevImg navImg" />
+			</a>
+			<a id="top_link_next" href="index.html">
+				<img src="next.png" class="nextImg navImg" />
+			</a>
+		</div>
+
+		<br>
+
+		<div ng-app="" ng-controller="postsController" class="mainContainer" id="ng-app" style="display: none;">
+			<div class="postDiv radiusDiv" ng-repeat="post in posts" >
+				<div class="titleDiv" >
+					<a href="{{ post.sourceurl }}">
+						{{ post.title }}
+					</a>
+				</div>
+				<div class="imageDiv radiusDiv" >
+					<a href="{{ post.sourceurl }}">
+						<img class="postImg" src="{{ post.url }}"/>
+						<div class="titleDiv">{{ posts.sourceurl }}</div>
+					</a>
+				</div>
+				<div class="titleDiv selfText" ng-if="post.data.is_self == true">
+					{{ post.data.selftext }}
+				</div>
+			</div>
+		</div>
+
+		<br>
+
+		<div class="navigationDiv">
+			<a id="bot_link_prev" href="index.html">
+				<img src="next.png" class="prevImg navImg" />
+			</a>
+			<a id="bot_link_next" href="index.html">
+				<img src="next.png" class="nextImg navImg" />
+			</a>
+		</div>
+
+		<br>
+
+		<div class="footer">
+			<a href="http://www.ipepe.pl/">
+				Made by Patryk "iPePe" Ptasiński.
+			</a>
+			<br>
+			<a href="http://apps.ipepe.pl/">
+				<i class="fa fa-cog fa-spin fa-responsive-size"></i>
+				More apps from iPePe!
+			</a>
+		</div>
+	</center>
+
+	<script type="text/javascript">
+	function clickMenu(){
+		var btn = document.getElementById('menuButton');
+		var list = document.getElementById('menuList');
+		if( btn.classList.contains("active") && list.classList.contains("active") ){
+			btn.classList.remove("active");
+			list.classList.remove("active");
+		}else{
+			btn.classList.add("active");
+			list.classList.add("active");
+		}
+	}
+	function getQueryVariable(variable)
+	{
+		var query = window.location.search.substring(1);
+		var vars = query.split("&");
+		for (var i=0;i<vars.length;i++) {
+			var pair = vars[i].split("=");
+			if(pair[0] == variable){return pair[1];}
+		}
+		return(false);
+	}
+	function goNextButtons(make_visible){
+		document.getElementById('top_link_next').style.display = make_visible? '' : 'none';
+		document.getElementById('bot_link_next').style.display = make_visible? '' : 'none';
+	}
+	function goPrevButtons(make_visible){
+		document.getElementById('top_link_prev').style.display = make_visible? '' : 'none';
+		document.getElementById('bot_link_prev').style.display = make_visible? '' : 'none';
+	}
+	function setNavButtons(p_page){
+		p_page = parseInt(p_page, 10);
+		document.getElementById('top_link_next').href = "index.html?page=" + (p_page+1)
+		document.getElementById('bot_link_next').href = "index.html?page=" + (p_page+1)
+		document.getElementById('top_link_prev').href = "index.html?page=" + (p_page-1)
+		document.getElementById('bot_link_prev').href = "index.html?page=" + (p_page-1)
+	}
+	function postsController($scope, $http) {
+		var p_page = getQueryVariable("page") || 0;
+		var httpGetValue = 'http://apps.ipepe.pl/handler/haff?page=' + p_page;
+
+		document.getElementById('loadingDiv').innerHTML = "<h1>Loading...</h1>"
+
+		$http.get(httpGetValue)
+		.success(function(response) {
+			$scope.posts = response.result;
+
+			document.getElementById('ng-app').style.display = 'inherit';
+			document.getElementById('loadingDiv').innerHTML = "<h1>Loaded! Have fun!</h1>"
+			document.getElementById('loadingDiv').style.display = 'none';
+
+			if( response.result.length === 10 ) goNextButtons(true);
+			if( p_page > 0 ) goPrevButtons(true);
+
+			setNavButtons(p_page);
+
+		}).error(function(response) {
+			document.getElementById('loadingDiv').innerHTML = "<h1>ERRROR!</h1>"
+		});
+	}
+	</script>
+</body>
+</html>
