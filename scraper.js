@@ -26,7 +26,7 @@ module.exports = function (p_dpd_ic, p_colors, p_webs_array ) {
 	};
 
 	scraperInstance.start = function(){
-		this.interval = setInterval(this.intervalFunction.bind(this), this.timers.hour / this.webs_array.length );
+		this.interval = setInterval(this.intervalFunction.bind(this), this.timers.minute / this.webs_array.length );
 		// this.intervalFunction();
 		// this.intervalFunction();
 		// this.intervalFunction();
@@ -50,9 +50,14 @@ module.exports = function (p_dpd_ic, p_colors, p_webs_array ) {
 	scraperInstance.requestCallback = function(err, res, body) {
 		if(!err && res.statusCode == 200 && res.headers['content-type'].indexOf('json') > -1){
 			results = JSON.parse(body);
-			for(var i=0; i < results.data.children.length; i++){
-					this.handleData(results.data.children[i].data);
-			}
+			var that = this;
+			results.data.children.forEach( function(eachChild){
+				this.handleData(eachChild.data);
+			}.bind(this));
+
+			// for(var i=0; i < results.data.children.length; i++){
+			// 		this.handleData(results.data.children[i].data);
+			// }
 		}else{
 			console.error(err);
 			console.error(body);
