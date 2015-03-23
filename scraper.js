@@ -27,7 +27,7 @@ module.exports = function (p_dpd_ic, p_colors, p_webs_array ) {
 
 	scraperInstance.start = function(){
 		this.interval = setInterval(this.intervalFunction.bind(this), this.timers.hour / this.webs_array.length );
-		// this.intervalFunction();
+		this.intervalFunction();
 		// this.intervalFunction();
 		// this.intervalFunction();
 		return this.interval;
