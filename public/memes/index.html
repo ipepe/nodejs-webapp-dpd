@@ -14,16 +14,13 @@
 		border-radius: 10px;
 		word-wrap: break-word;
 	}
-	body{
-		background-color: black;
-	}
-	img{
+	.postImg{
 		max-width: 90%;
 		max-height: 50%;
 		width: 90%;
 		background-color: white;
 	}
-	div{
+	.postDiv{
 		padding: auto;
 		margin: auto auto 10px auto;
 	}
@@ -43,13 +40,11 @@
 		color: #747474;
 		max-width: 95%;
 	}
-	.nextImg{
-		max-width: 200px;
-		max-height: 200px;
+	.navImg{
+		/*display: none;*/
+		background-color: #2A2A2A
 	}
 	.prevImg{
-		max-width: 200px;
-		max-height: 200px;
 		-moz-transform: scaleX(-1);
 		-o-transform: scaleX(-1);
 		-webkit-transform: scaleX(-1);
@@ -76,17 +71,26 @@
 		body, img, div, a, i{
 			font-size: 2.0vw;
 		}
+		.navImg{
+			width: 12vw;
+			max-width: 15vw;
+			max-height: 15vw;
+		}
 	}
 	@media all and (max-width: 900px){
 		.postDiv, .footer{
 			max-width: 95%;
-			font-weight: bold;
+			/*font-weight: bold;*/
 		}
 		.fa-responsive-size{
 			font-size: 3.5vw;
 		}
 		body, img, div, a, i {
-			font-size: 3.5vw;
+			font-size: 5vw;
+		}
+		.navImg{
+			width: 30%;
+			max-width: 30%;
 		}
 	}
 	.menuButton:hover,
@@ -137,76 +141,84 @@
 		left: 30vw;
 		/*position: relative;*/
 	}
+	body{
+		text-align: center;
+		background-color: black;
+	}
 	</style>
 </head>
+<!-- <div id="menuButton" class="menuButton" onClick="clickMenu()">
+<i class="fa fa-bars fa-3x"></i>
+</div>
+
+<div id="menuList" class="menuList">
+<br>
+<a href="http://apps.ipepe.pl/">
+More apps!
+</a>
+</div> -->
 <body>
+	<center>
 
-	<div id="menuButton" class="menuButton" onClick="clickMenu()">
-		<i class="fa fa-bars fa-3x"></i>
-	</div>
+		<div class="loadingDiv" id="loadingDiv">
+			<h1>Starting...</h1>
+			<h3>Make sure JavaScript is running..?</h3>
+		</div>
 
-	<div id="menuList" class="menuList">
+		<div class="navigationDiv">
+			<a id="top_link_prev" href="index.html">
+				<img src="next.png" class="prevImg navImg" />
+			</a>
+			<a id="top_link_next" href="index.html">
+				<img src="next.png" class="nextImg navImg" />
+			</a>
+		</div>
+
 		<br>
-		<a href="http://apps.ipepe.pl/">
-			More apps!
-		</a>
-	</div>
 
-	<div class="loadingDiv" id="loadingDiv">
-		<h1>Starting...</h1>
-	</div>
-
-	<div class="navigationDiv">
-		<a id="top_link_prev" href="index.html" style="display: none;">
-			<img src="next.png" style="background-color: #2A2A2A;" class="prevImg" />
-		</a>
-		<a id="top_link_next" href="index.html" style="display: none;">
-			<img src="next.png" style="background-color: #2A2A2A;" class="nextImg" />
-		</a>
-	</div>
-
-	<br>
-
-	<div ng-app="" ng-controller="postsController" class="mainContainer" id="ng-app" style="display: none;">
-		<div class="postDiv" ng-repeat="post in posts" >
-			<div class="titleDiv" >
-				<a href="{{ post.sourceurl }}">
-					{{ post.title }}
-				</a>
-			</div>
-			<div class="imageDiv" >
-				<a href="{{ post.sourceurl }}">
-					<img class="postImg" src="{{ post.url }}"/>
-					<div class="titleDiv">{{ posts.sourceurl }}</div>
-				</a>
-			</div>
-			<div class="titleDiv selfText" ng-if="post.data.is_self == true">
-				{{ post.data.selftext }}
+		<div ng-app="" ng-controller="postsController" class="mainContainer" id="ng-app" style="display: none;">
+			<div class="postDiv radiusDiv" ng-repeat="post in posts" >
+				<div class="titleDiv" >
+					<a href="{{ post.sourceurl }}">
+						{{ post.title }}
+					</a>
+				</div>
+				<div class="imageDiv radiusDiv" >
+					<a href="{{ post.sourceurl }}">
+						<img class="postImg" src="{{ post.url }}"/>
+						<div class="titleDiv">{{ posts.sourceurl }}</div>
+					</a>
+				</div>
+				<div class="titleDiv selfText" ng-if="post.data.is_self == true">
+					{{ post.data.selftext }}
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<br>
-
-	<div class="navigationDiv">
-		<a id="bot_link_prev" href="index.html" style="display: none;">
-			<img src="next.png" style="background-color: #2A2A2A;" class="prevImg" />
-		</a>
-		<a id="bot_link_next" href="index.html" style="display: none;">
-			<img src="next.png" style="background-color: #2A2A2A;" class="nextImg" />
-		</a>
-	</div>
-
-	<div class="footer">
-		<a href="http://www.ipepe.pl/">
-			Made by Patryk "iPePe" Ptasiński.
-		</a>
 		<br>
-		<a href="http://apps.ipepe.pl/">
-			<i class="fa fa-cog fa-spin fa-responsive-size"></i>
-			More apps from iPePe!
-		</a>
-	</div>
+
+		<div class="navigationDiv">
+			<a id="bot_link_prev" href="index.html">
+				<img src="next.png" class="prevImg navImg" />
+			</a>
+			<a id="bot_link_next" href="index.html">
+				<img src="next.png" class="nextImg navImg" />
+			</a>
+		</div>
+
+		<br>
+
+		<div class="footer">
+			<a href="http://www.ipepe.pl/">
+				Made by Patryk "iPePe" Ptasiński.
+			</a>
+			<br>
+			<a href="http://apps.ipepe.pl/">
+				<i class="fa fa-cog fa-spin fa-responsive-size"></i>
+				More apps from iPePe!
+			</a>
+		</div>
+	</center>
 
 	<script type="text/javascript">
 	function clickMenu(){
