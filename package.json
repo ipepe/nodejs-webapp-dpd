@@ -20,7 +20,7 @@
   "homepage": "https://github.com/ipepe/nodejs-webapp-dpd",
   "dependencies": {
     "colors": "1.0.3",
-    "deployd": "0.8.0",
+    "deployd": "file:../../../../var/folders/rg/gdhjmqxj6vb8d8gbtpm2m98h0000gn/T/npm-17746-bd6bb302/git-cache-e1eb4bea6662/ca7ac73c37a3aae047a676d0ca586670674e796e",
     "dpd-event": "0.0.2",
     "request": "2.53.0"
   }

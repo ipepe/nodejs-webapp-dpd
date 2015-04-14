@@ -65,7 +65,7 @@ module.exports = function (p_dpd_ic, p_colors, p_webs_array ) {
 	};
 
 	scraperInstance.handleData = function (p_data){
-		if( !p_data.is_self && !p_data.stickied && p_data.score > 100 ){
+		if( !p_data.is_self && !p_data.stickied && p_data.score > 20 ){
 			data_url = this.parseUrl(p_data.url);
 
 			switch(data_url.switcher) {
